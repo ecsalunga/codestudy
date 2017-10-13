@@ -1,0 +1,17 @@
+<div>
+  <input id="txtName" [(ngModel)]="selected.Name" />
+  <input id="txtEmail" [(ngModel)]="selected.Email" />
+</div>
+
+<div *ngFor="let item of items">
+  <div>{{ item.Name }} </div>
+  <div>{{ item.Email }} </div>
+
+  <button (click)="Select(item)">
+    Set
+  </button>
+</div>
+
+<button (click)="Add()">
+  Update
+</button>
