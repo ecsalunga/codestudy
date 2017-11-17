@@ -1,3 +1,5 @@
+<ng-container #ViewContainer></ng-container>
+{{ CurrentNumber }}
 <div>
   <input id="txtName" [(ngModel)]="selected.Name" />
   <input id="txtEmail" [(ngModel)]="selected.Email" />
@@ -14,4 +16,15 @@
 
 <button (click)="Add()">
   Update
+</button>
+
+<button (click)="Test()">
+  Test
+</button>
+<button (click)="Test2()">
+  Test2
+</button>
+
+<button (click)="Stop()">
+  Stop
 </button>

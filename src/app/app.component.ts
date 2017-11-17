@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { Subscription } from 'rxjs/Subscription';
+import { ClientManger } from "./data/models/IInterpreter";
 
 @Component({
   selector: 'app-root',
@@ -8,13 +9,35 @@ import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/fires
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @ViewChild('ViewContainer', {read: ViewContainerRef})
+  ViewContainer: ViewContainerRef;
+
   title = 'app';
   items: Array<User>;
   selected: User;
-
-  constructor(public aft: AngularFirestore, public af: AngularFireDatabase  ) { 
+  cm: ClientManger;
+  CurrentNumber: string;
+  subs: Subscription;
+  constructor( public af: AngularFireDatabase ) { 
     this.selected = new User();
     this.LoadData();
+    this.cm = new ClientManger();
+  }
+
+  Test() {
+    this.subs = this.cm.GetInterpreter("client").subscribe(num => {
+      this.CurrentNumber = num;
+    });
+  }
+
+  Test2() {
+    this.subs = this.cm.GetInterpreter("swipe").subscribe(num => {
+      this.CurrentNumber = num;
+    });
+  }
+
+  Stop() {
+    this.subs.unsubscribe();
   }
 
   Select(item: User) {
@@ -27,21 +50,11 @@ export class AppComponent {
       return ref.orderByChild('Email');
     }).snapshotChanges().subscribe(snpashots => {
       snpashots.forEach(item => {
-        let user:User = item.payload.val();
+        let user: User = item.payload.val();
         user.key = item.key;
         this.items.push(user);
       });
     });
-    
-
-    /*
-    let collection: AngularFirestoreCollection<IPerson> = this.aft.collection('users');
-    collection.valueChanges().subscribe(snapshots => {
-      snapshots.forEach(item => {
-        this.items.push(item);
-      });
-    });
-    */
   }
 
   Add() {
@@ -53,12 +66,6 @@ export class AppComponent {
     {
       this.af.list("/users").update(this.selected.key, this.selected);
     }
-
-      /*
-    let collection: AngularFirestoreCollection<IPerson> = this.aft.collection('users');
-    
-    collection.doc(this.selected.key).set(Object.assign({}, this.selected));
-    */
   }
 }
 
