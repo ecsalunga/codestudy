@@ -1,0 +1,42 @@
+﻿{
+  "components": [
+    {
+      "type": "Genting.Infrastructure.CommonServices.Client.Messengers.FleckMessenger, Genting.Infrastructure.CommonServices.Client.Messengers",
+      "services": [
+        {
+          "type": "Genting.Infrastructure.CommonServices.Client.Core.IMessenger, Genting.Infrastructure.CommonServices.Client.Core"
+        }
+      ],
+      "properties": {
+        "Path": "ws://127.0.0.1:8031/service"
+      }
+    },
+    {
+      "type": "Genting.Infrastructure.CommonServices.Client.Interpreters.MockInterpreter, Genting.Infrastructure.CommonServices.Client.Interpreters",
+      "services": [
+        {
+          "type": "Genting.Infrastructure.CommonServices.Client.Core.IInterpreter, Genting.Infrastructure.CommonServices.Client.Core"
+        }
+      ]
+    },
+    {
+      "type": "Genting.Infrastructure.CommonServices.Client.Interpreters.BarcodeInterpreter, Genting.Infrastructure.CommonServices.Client.Interpreters",
+      "services": [
+        {
+          "type": "Genting.Infrastructure.CommonServices.Client.Core.IInterpreter, Genting.Infrastructure.CommonServices.Client.Core"
+        }
+      ],
+      "properties": {
+        "XMLIn": "<inArgs><cmdArgs><arg-int>1</arg-int><arg-int>1</arg-int></cmdArgs></inArgs>"
+      }
+    },
+    {
+      "type": "Genting.Infrastructure.CommonServices.Client.Interpreters.TerminalInterpreter, Genting.Infrastructure.CommonServices.Client.Interpreters",
+      "services": [
+        {
+          "type": "Genting.Infrastructure.CommonServices.Client.Core.IInterpreter, Genting.Infrastructure.CommonServices.Client.Core"
+        }
+      ]
+    }
+  ]
+}
